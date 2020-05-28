@@ -3,7 +3,9 @@ package org.example;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CalculatorServiceTest  {
+import java.math.BigDecimal;
+
+public class CalculatorServiceTest {
 
     @Test
     public void testFirstValidationOfCurrencyName() {
@@ -54,16 +56,16 @@ public class CalculatorServiceTest  {
         CalculatorService calculatorService = new CalculatorService();
 
         //when
-        Double amount1 = calculatorService.calculateAmount("USD", 100.0);
-        Double amount2 = calculatorService.calculateAmount("JPY", 1.0);
-        Double amount3 = calculatorService.calculateAmount("USD", 0.0);
-        Double amount4 = calculatorService.calculateAmount("USD", null);
+        BigDecimal amount1 = calculatorService.calculateAmount("USD", new BigDecimal("100"));
+        BigDecimal amount2 = calculatorService.calculateAmount("JPY", new BigDecimal("1.0"));
+        BigDecimal amount3 = calculatorService.calculateAmount("USD", new BigDecimal("0.0"));
+        BigDecimal amount4 = calculatorService.calculateAmount("USD", null);
 
         //then
-        Assert.assertEquals(amount1, new Double(109.74999999999999));
-        Assert.assertEquals(amount2, new Double(117.92));
-        Assert.assertEquals(amount3, new Double(0.0));
-        Assert.assertEquals(amount4, new Double(0.0));
+        Assert.assertEquals(amount1, new BigDecimal("109.74999999999999"));
+        Assert.assertEquals(amount2, new BigDecimal("117.92"));
+        Assert.assertEquals(amount3, new BigDecimal("0.0"));
+        Assert.assertEquals(amount4, new BigDecimal("0.0"));
 
     }
 }

@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,8 +28,8 @@ public class CalculatorService {
         String nullCheckedValue = Optional.ofNullable(value).orElse("");
 
         try {
-            double doubleValue = Double.parseDouble(nullCheckedValue);
-            if(doubleValue<0.0){
+            BigDecimal doubleValue = new BigDecimal(nullCheckedValue);
+            if (doubleValue.compareTo(BigDecimal.ZERO) < 0) {
                 throw new NumberFormatException();
             }
             return true;
@@ -39,22 +40,21 @@ public class CalculatorService {
         }
     }
 
-    public Double calculateAmount(String currencyName, Double amount) {
+    public BigDecimal calculateAmount(String currencyName, BigDecimal amount) {
         DataParser dataParser = new DataParser();
 
         String currencyNameUpperCase = Optional.ofNullable(currencyName)
                 .map(String::toUpperCase)
                 .orElse(null);
 
-        String searchRate = dataParser.parseData().stream()
+        BigDecimal rate = dataParser.parseData().stream()
                 .filter(cube -> cube.getCurrency().equals(currencyNameUpperCase))
                 .findFirst()
                 .map(Cube::getRate)
-                .orElse("0");
+                .orElse(BigDecimal.ZERO);
 
-        Double checkedAmount = Optional.ofNullable(amount).orElse(0.0);
-        Double rate = Double.valueOf(searchRate);
-        Double resultOfCalculation = rate * checkedAmount;
+        BigDecimal checkedAmount = Optional.ofNullable(amount).orElse(BigDecimal.ZERO);
+        BigDecimal resultOfCalculation = rate.multiply(checkedAmount);
 
         return resultOfCalculation;
     }

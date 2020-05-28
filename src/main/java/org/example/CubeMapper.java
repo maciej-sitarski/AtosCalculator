@@ -2,6 +2,7 @@ package org.example;
 
 import org.jdom2.Element;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class CubeMapper {
@@ -15,8 +16,9 @@ public class CubeMapper {
                 .map(element -> element.getAttributeValue("currency"))
                 .orElse(null);
 
-        String rate = cubeElementOptional
+        BigDecimal rate = cubeElementOptional
                 .map(element -> element.getAttributeValue("rate"))
+                .map(BigDecimal::new)
                 .orElse(null);
 
         singleCube.setCurrency(currency);

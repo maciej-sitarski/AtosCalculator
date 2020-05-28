@@ -56,7 +56,7 @@ public class DataParser {
         return cubeSecondLevel;
     }
 
-    private List<Element> getCubeList(Element cubeSecondLevel){
+    private List<Element> getCubeList(Element cubeSecondLevel) {
         List<Element> cubeList = Optional.ofNullable(cubeSecondLevel)
                 .map(Element::getChildren)
                 .orElseGet(Collections::emptyList);

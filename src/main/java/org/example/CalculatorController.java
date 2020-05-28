@@ -1,6 +1,6 @@
 package org.example;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class CalculatorController {
@@ -29,23 +29,22 @@ public class CalculatorController {
         do {
             currencyName = scanner.nextLine();
             isCurrencyNameCorrect = calculatorService.validationOfCurrencyName(currencyName);
-            if(!isCurrencyNameCorrect){
+            if (!isCurrencyNameCorrect) {
                 System.out.print("Wpisano niepoprawną nazwę waluty. Wpisz jeszcze raz poprawną nazwę waluty: ");
             }
-        } while(!isCurrencyNameCorrect);
+        } while (!isCurrencyNameCorrect);
 
         Boolean isAmountCorrect = false;
         String amount = null;
-        do{
+        do {
             System.out.print("Wpisz kwotę jaką chcesz przeliczyć(EUR): ");
             amount = scanner.nextLine();
             isAmountCorrect = calculatorService.validationOfAmount(amount);
-        }while (!isAmountCorrect);
-        Double finalAmount = Double.valueOf(amount);
-        Double resultOfCalculateAmount = calculatorService.calculateAmount(currencyName, finalAmount);
+        } while (!isAmountCorrect);
+        BigDecimal finalAmount = new BigDecimal(amount);
+        BigDecimal resultOfCalculateAmount = calculatorService.calculateAmount(currencyName, finalAmount);
 
-        DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Wynik:  " + df.format(finalAmount) + " EUR" + " = " + df.format(resultOfCalculateAmount) + " " + currencyName.toUpperCase());
+        System.out.println("Wynik:  " + finalAmount.setScale(2, BigDecimal.ROUND_UP) + " EUR" + " = " + resultOfCalculateAmount.setScale(2, BigDecimal.ROUND_UP) + " " + currencyName.toUpperCase());
         System.out.println("Czy chcesz dalej korzystać z kalkulatora? T/N");
         String answer = scanner.nextLine();
         boolean decision = false;

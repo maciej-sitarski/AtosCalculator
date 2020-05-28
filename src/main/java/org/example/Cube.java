@@ -1,13 +1,15 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public class Cube {
     private String currency;
-    private String rate;
+    private BigDecimal rate;
 
     public Cube() {
     }
 
-    public Cube(String currency, String rate) {
+    public Cube(String currency, BigDecimal rate) {
         this.currency = currency;
         this.rate = rate;
     }
@@ -20,11 +22,11 @@ public class Cube {
         this.currency = currency;
     }
 
-    public String getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 }
